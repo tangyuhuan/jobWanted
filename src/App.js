@@ -3,6 +3,19 @@ import { Button } from 'antd-mobile';
 import 'antd-mobile/dist/antd-mobile.css'; 
 import { connect } from 'react-redux'
 import {addGUN,removeGUN,addGunAsync} from './index.redux'
+
+// const mapStatetoProps=(state)=>{
+//   return { num:state }
+// }
+// const actionCreators = {addGUN,removeGUN,addGunAsync} 
+//App = connect(mapStatetoProps,actionCreators)(App)
+
+@connect(
+  //你要state什么属性放到props里
+  state=>({num:state}),
+  //你要state什么方法，放到props里，自动dispatch
+  {addGUN,removeGUN,addGunAsync} 
+)
 class App extends Component {
   //store.dispatch的已经不需要了 addGUN等已经自动有dispatch功能了
   render() {
@@ -17,10 +30,5 @@ class App extends Component {
     );
   }
 }
-const mapStatetoProps=(state)=>{
-  return { num:state }
-}
-const actionCreators = {addGUN,removeGUN,addGunAsync} 
-App = connect(mapStatetoProps,actionCreators)(App)
-//属性和方法分别给到组件App，这样react-redux会自动把这些参数放到App的props里面
+
 export default App;
