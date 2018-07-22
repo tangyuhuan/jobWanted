@@ -8,12 +8,13 @@ class App extends Component {
   render() {
     const store  = this.props.store;
     const num = store.getState();
-    const{addGUN,removeGUN}=this.props;
+    const{addGUN,removeGUN,addGunAsync}=this.props;
     return (
       <div className="App">
         <h1>number of guns:{num}</h1>
-         <Button type="primary" onClick={()=>store.dispatch(addGUN())}>申请武器</Button>
-         <Button type="primary" onClick={()=>store.dispatch(removeGUN())}>减少武器</Button>
+        <Button type="primary" onClick={()=>store.dispatch(addGUN())}>申请武器</Button>
+        <Button type="primary" onClick={()=>store.dispatch(removeGUN())}>上交武器</Button>
+        <Button type="primary" onClick={()=>store.dispatch(addGunAsync())}>拖两天再给</Button>
       </div>
     );
   }
