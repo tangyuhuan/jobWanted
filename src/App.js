@@ -4,12 +4,6 @@ import 'antd-mobile/dist/antd-mobile.css';
 import { connect } from 'react-redux'
 import {addGUN,removeGUN,addGunAsync} from './index.redux'
 
-// const mapStatetoProps=(state)=>{
-//   return { num:state }
-// }
-// const actionCreators = {addGUN,removeGUN,addGunAsync} 
-//App = connect(mapStatetoProps,actionCreators)(App)
-
 @connect(
   //你要state什么属性放到props里
   state=>({num:state}),
