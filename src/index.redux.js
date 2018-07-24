@@ -4,14 +4,14 @@ const REMOVE_GUN = 'remove a gun '
 
 
 //建立reducer,(根据老的state和action，生成新的状态的函数称之为reducer) 
-export function counter(state=0, action){
+export function counter(state=10, action){
     switch(action.type){
         case ADD_GUN:
             return state+1
         case REMOVE_GUN:
             return state-1
         default:
-            return 10
+            return state
     }
 }
 //action creator
