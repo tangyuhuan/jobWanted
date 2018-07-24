@@ -7,6 +7,7 @@ import { BrowserRouter, Route, Redirect, Switch} from 'react-router-dom'
 
 import Login from './container/login/login'
 import Register from './container/register/register'
+import AuthRoute from './component/authroute/authroute'
 import reducers from './reducer'
 import './config'
 //新建store，以props形式传给App
@@ -18,10 +19,11 @@ const store = createStore(reducers,compose(
 ReactDOM.render(
 	(<Provider store={store}>
 		<BrowserRouter>
-			<Switch>
+			<div>
+				<AuthRoute></AuthRoute>
 				<Route path='/login' exact component={Login}></Route>
 				<Route path='/register' component={Register}></Route>
-			</Switch>
+			</div>
 		</BrowserRouter>
 	</Provider>),
 	document.getElementById('root')
