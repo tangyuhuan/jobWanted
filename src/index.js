@@ -1,9 +1,9 @@
-import React,{ Component }from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore , applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
 import { Provider } from 'react-redux'
-import { BrowserRouter, Route, Link, Redirect, Switch} from 'react-router-dom'
+import { BrowserRouter, Route, Redirect, Switch} from 'react-router-dom'
 // import App from './App';
 //import { counter } from './index.redux'
 import reducers from './reducer'
@@ -14,7 +14,7 @@ const store = createStore(reducers,compose(
 	applyMiddleware(thunk),
 	window.devToolsExtension? window.devToolsExtension():()=>{}
 ))
-console.log(store.getState())
+// console.log(store.getState())
 // class Text extends Component{
 // 	render(){
 // 		console.log(this.props)

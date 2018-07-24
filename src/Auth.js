@@ -9,9 +9,6 @@ import { Redirect } from 'react-router-dom'
 	{ login }
 )
 class Auth extends Component{
-	constructor(props){
-		super(props);
-	}
 	render(){
 		return (
 			<div>
