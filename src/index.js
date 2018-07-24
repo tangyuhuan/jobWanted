@@ -9,6 +9,7 @@ import { BrowserRouter, Route, Redirect, Switch} from 'react-router-dom'
 import reducers from './reducer'
 import Auth from './Auth'
 import Dashboard from './Dashboard'
+import './config'
 //新建store，以props形式传给App
 const store = createStore(reducers,compose(
 	applyMiddleware(thunk),
