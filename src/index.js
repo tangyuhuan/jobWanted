@@ -10,6 +10,7 @@ import Register from './container/register/register'
 import AuthRoute from './component/authroute/authroute'
 import reducers from './reducer'
 import './config'
+import './index.css'
 //新建store，以props形式传给App
 const store = createStore(reducers,compose(
 	applyMiddleware(thunk),
