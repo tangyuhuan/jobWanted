@@ -2,6 +2,7 @@ import React,{Component} from 'react'
 import Logo from '../../component/logo/logo'
 import { List, InputItem, WingBlank, WhiteSpace, Button, Radio } from 'antd-mobile';
 import {connect} from 'react-redux'
+import {Redirect} from 'react-router-dom'
 import {register} from '../../redux/user.redux'
 @connect(
 	state=>state.user,
@@ -46,13 +47,13 @@ class Register extends Component{
 				 			onChange={v=>this.handleChange('repeatpwd',v)}
 				 		>确认密码</InputItem>
 				 		<RadioItem 
-				 			checked={this.state.type=='genius'}
+				 			checked={this.state.type==='genius'}
 				 			onChange={()=>this.handleChange('type','genius')}
 				 		>
 				 			牛人
 				 		</RadioItem>
 				 		<RadioItem 
-				 			checked={this.state.type=='boss'}
+				 			checked={this.state.type==='boss'}
 				 			onChange={()=>this.handleChange('type','boss')}
 				 		>
 				 			BOSS
