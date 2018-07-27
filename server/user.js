@@ -5,12 +5,22 @@ const model = require('./model')
 const User = model.getModel('user')
 const utils = require('utility')
 Router.get('/list',function(req,res){
+	//清除一下之前list中的数据
+	//User.remove({},function(err,doc){})
 	User.find({},function(err,doc){
 		return res.json(doc)
 	})
 })
+Router.post('/login',function(req,res){
+	const {user,pwd} = req.body
+	User.findOne({user,pwd:md5Pwd(pwd)},{'pwd':0},function(err,doc){
+		if(!doc){
+			return res.json({code:1,msg:'用户名或者密码错误'})
+		}
+		return res.json({code:0,data:doc})
+	})
+})
 Router.post('/register',function(req, res){
-	console.log(req.body)
 	const {user,pwd,type} = req.body
 	//使用findOne查找一条数据就返回
 	User.findOne({user:user},function(err,doc){
