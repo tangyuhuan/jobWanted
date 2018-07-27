@@ -4,6 +4,7 @@ const Router = express.Router()
 const model = require('./model')
 const User = model.getModel('user')
 const utils = require('utility')
+const _filter = {'pwd':0,'__v':0}
 Router.get('/list',function(req,res){
 	//清除一下之前list中的数据
 	//User.remove({},function(err,doc){})
@@ -13,10 +14,11 @@ Router.get('/list',function(req,res){
 })
 Router.post('/login',function(req,res){
 	const {user,pwd} = req.body
-	User.findOne({user,pwd:md5Pwd(pwd)},{'pwd':0},function(err,doc){
+	User.findOne({user,pwd:md5Pwd(pwd)},_filter,function(err,doc){
 		if(!doc){
 			return res.json({code:1,msg:'用户名或者密码错误'})
 		}
+		res.cookie('userid',doc._id)
 		return res.json({code:0,data:doc})
 	})
 })
@@ -28,19 +30,49 @@ Router.post('/register',function(req, res){
 			return res.json({code:1,msg:'用户名重复'})
 		}
 		//如果没有查到同名user就新增一条数据
-		User.create({user,type,pwd:md5Pwd(pwd)},function(err,doc){
+		const userModel = new User({user,type,pwd:md5Pwd(pwd)})
+		userModel.save(function(err,doc){
 			if(err){
 				return res.json({code:1,msg:'后端出错了'})
 			}
-			//返回code：0表示登录成功
-			return res.json({code:0})
+			const {user, type, _id} = doc
+			res.cookie('userid',_id)
+			return res.json({code:0,data:{user, type, _id}})
 		})
+		// User.create({user,type,pwd:md5Pwd(pwd)},function(err,doc){
+		// 	if(err){
+		// 		return res.json({code:1,msg:'后端出错了'})
+		// 	}
+		// 	//返回code：0表示登录成功
+		// 	return res.json({code:0})
+		// })
 	})
 })
+// Router.get('/info',function(req,res){
+
+// 	//根据用户有无cookie，返回不同的信息
+
+// 	return res.json({code:1})
+
+// })
 Router.get('/info',function(req,res){
-	//根据用户有无cookie，返回不同的信息
-	return res.json({code:0})
+    //根据用户有无cookie，返回不同的信息
+    //读取userid
+    const {userid} = req.cookies
+    if(!userid){
+        //如果没有userid，就去登录
+        return res.json({code:1})
+    }
+    User.findOne({_id:userid},_filter,function(err,doc){
+        if(err){
+            return res.json({code:1,msg:'后端出错了'})
+        }
+        if(doc){
+            return res.json({code:0,data:doc})
+        }
+    })
 })
+
 
 module.exports = Router
 
