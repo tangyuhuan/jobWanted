@@ -12,6 +12,24 @@ Router.get('/list',function(req,res){
 		return res.json(doc)
 	})
 })
+Router.post('/update',function(req,res){
+	//cookie校验
+	const userid = req.cookies.userid
+	if(!userid){
+        return json.dumps({code:1})
+    }
+    //查找id是否存在并更新数据,mongoose提供findByIdAndUpdate方法
+    const body = req.body
+    User.findByIdAndUpdate(userid,body,function(err,doc){
+    	//node还不支持es6的...运算符，所以使用Object.assig将body数据和原先的合并一下
+    	const data = Object.assign({},{
+    		user:doc.user,
+    		type:doc.type
+    	},body)
+    	return res.json({code:0,data})
+    })
+})
+
 Router.post('/login',function(req,res){
 	const {user,pwd} = req.body
 	User.findOne({user,pwd:md5Pwd(pwd)},_filter,function(err,doc){
@@ -39,13 +57,6 @@ Router.post('/register',function(req, res){
 			res.cookie('userid',_id)
 			return res.json({code:0,data:{user, type, _id}})
 		})
-		// User.create({user,type,pwd:md5Pwd(pwd)},function(err,doc){
-		// 	if(err){
-		// 		return res.json({code:1,msg:'后端出错了'})
-		// 	}
-		// 	//返回code：0表示登录成功
-		// 	return res.json({code:0})
-		// })
 	})
 })
 // Router.get('/info',function(req,res){
