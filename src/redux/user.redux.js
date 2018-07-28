@@ -26,7 +26,9 @@ export function user(state=initState,action){
 			return state
 	}
 }
-function authSuccess(data){
+function authSuccess(obj){
+	//这样就把data中除了pwd以外的字段存放入data里
+	const {pwd,...data} = obj
 	return {type:AUTH_SUCCESS, payload:data}
 }
 function errorMsg(msg){
