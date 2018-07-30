@@ -8,8 +8,9 @@ const _filter = {'pwd':0,'__v':0}
 Router.get('/list',function(req,res){
 	//清除一下之前list中的数据
 	//User.remove({},function(err,doc){})
-	User.find({},function(err,doc){
-		return res.json(doc)
+	const { type } = req.query //通过req.query获取get参数
+	User.find({type},function(err,doc){
+		return res.json({code:0,data:doc})
 	})
 })
 Router.post('/update',function(req,res){

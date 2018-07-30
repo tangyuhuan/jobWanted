@@ -3,9 +3,8 @@ import { NavBar, TabBar} from 'antd-mobile';
 import NavLinkBar from '../navlink/navlink'
 // import PropTypes from 'prop-types';
 import {connect} from 'react-redux'
-function Boss(){
-	return <h2>Boss首页</h2>
-}
+import { Route, Redirect, Switch } from 'react-router-dom'
+import Boss from '../../component/boss/boss'
 
 function Genius(){
 	return <h2>牛人首页</h2>
@@ -66,11 +65,17 @@ class Dashboard extends Component{
 			<div>
 				{/*header页面*/}
 		    	<NavBar>{navList.find(v=>v.path===pathname).title}</NavBar>
-		    	<NavLinkBar data={navList}></NavLinkBar>
+		    	<div style={{marginTop:45}}>
+			    	<Switch>
+			    		{navList.map(v=>(
+			    			<Route key={v.path} path={v.path} component={v.component}></Route>
+			    		))}
+			    	</Switch>
+		    	</div>
+		    	<NavLinkBar data={navList} />
 		    </div>
 		)
 	}
 }
 export default Dashboard
 
-//	    	<NavLinkBar data={navList}></NavLinkBar>
