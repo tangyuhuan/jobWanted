@@ -17,7 +17,7 @@ class NavLinkBar extends Component{
 		const navList = this.props.data.filter(v=>!v.hide) //过滤掉hide是true的，从导航栏中去掉
 		const {pathname} = this.props.location //获取导航路径
 		return(
-			<div style={{ position: 'fixed', height: '100%', width: '100%', top: 0 }}>
+			<div style={{position: 'fixed', height: '100%', width: '100%', top: 0}}>
 			<TabBar>
 				{navList.map(v=>(
 					<TabBar.Item
@@ -30,10 +30,12 @@ class NavLinkBar extends Component{
 							this.props.history.push(v.path)
 						}}
 					>
+					{this.props.children}
 					</TabBar.Item>
 				))}
 			</TabBar>
 			</div>
+
 		)
 	}
 }

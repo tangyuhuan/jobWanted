@@ -58,19 +58,21 @@ class Dashboard extends Component{
 		]
 		return(
 			<div>
-				{/*header页面*/}
-		    	<NavBar>{navList.find(v=>v.path===pathname).title}</NavBar>
-		    	<div style={{marginTop:45}}>
-			    	<Switch>
-			    		{navList.map(v=>(
-			    			<Route key={v.path} path={v.path} component={v.component}></Route>
-			    		))}
-			    	</Switch>
-		    	</div>
-		    	<NavLinkBar data={navList} />
+		    	<NavLinkBar data={navList}>
+					{/*header页面*/}
+			    	<NavBar>{navList.find(v=>v.path===pathname).title}</NavBar>
+			    	<div style={{marginTop:10}}>
+				    	<Switch>
+				    		{navList.map(v=>(
+				    			<Route key={v.path} path={v.path} component={v.component}></Route>
+				    		))}
+				    	</Switch>
+			    	</div>
+		    	</NavLinkBar>
 		    </div>
 		)
 	}
 }
 export default Dashboard
+
 
