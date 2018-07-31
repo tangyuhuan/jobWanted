@@ -5,6 +5,7 @@ import {getRedirectPath} from '../util'
 const AUTH_SUCCESS = 'AUTH_SUCCESS'
 const ERROR_MSG = 'ERROR_MSG'
 const LOAD_DATA = 'LOAD_DATA'
+const LOGOUT = 'LOGOUT'
 //用户的初始状态
 const initState = {
 	redirectTo: '',
@@ -22,6 +23,8 @@ export function user(state=initState,action){
 			return {...state, ...action.payload}
 		case ERROR_MSG:
 			return {...state, msg:action.msg, isAuth:false}
+		case LOGOUT:
+			return {...initState,redirectTo:'/login'}
 		default:
 			return state
 	}
@@ -92,6 +95,10 @@ export function register({user,pwd,repeatpwd,type}){
 		})
     }
 
+}
+
+export function logoutSubmit(){
+	return { type:LOGOUT }
 }
 
 

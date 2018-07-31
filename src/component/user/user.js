@@ -2,8 +2,11 @@ import React,{Component} from 'react'
 import {connect} from 'react-redux'
 import { Result, List, Icon, WhiteSpace, Modal } from 'antd-mobile';
 import browserCookie from 'browser-cookies'
+import {logoutSubmit} from '../../redux/user.redux'
+import {Redirect} from 'react-router-dom'
 @connect(
-	state=>state.user
+	state=>state.user,
+	{logoutSubmit}
 )
 class User extends Component{
 	constructor(props){
@@ -17,8 +20,7 @@ class User extends Component{
 				{text:'确认', onPress: ()=>{
 					//清除cookie
 					browserCookie.erase('userid')
-					//刷新页面
-					window.location.href = window.location.href
+					this.props.logoutSubmit()
 				}},
 			])
 	}
@@ -47,10 +49,8 @@ class User extends Component{
 				  	</Item>
 				  </List>
 			</div>
-		):null
+		):<Redirect to={this.props.redirectTo} />
 	}
 }
 export default User
-//在用户还没有信息时返回
 
-	
