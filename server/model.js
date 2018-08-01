@@ -20,6 +20,12 @@ const models = {
 		'money':{'type':String}
 	},
 	chat:{
+		'chatid':{'type':String, require:true}, //每一个聊天的唯一标识
+		'from':{'type':String, require:true},
+		'to':{'type':String, require:true},
+		'read': {'type':Boolean, default:false}, //对to用户而言读的zhuang t
+		'content':{'type':String, require:true,default:''},
+		'create_time':{'type':Number, default:new Date().getTime()}
 	}
 }
 

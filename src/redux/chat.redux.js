@@ -1,0 +1,57 @@
+import axios from 'axios'
+import io from 'socket.io-client'
+//由于现在跨域 前端端口3000 后端9093
+const socket = io('ws://localhost:9093')
+//获取聊天列表
+const MSG_LIST = 'MSG_LIST'
+//读取信息
+const MST_RECV = 'MST_RECV'
+//标识已读
+const MSG_READ = 'MSG_READ'
+const initState = {
+	chatmsg:[],
+	unread:0
+}
+//reducer
+export function chat(state=initState, action){
+	switch(action.type){
+		case MSG_LIST:
+			return{...state, chatmsg:action.payload, unread:action.payload.filter(v=>!v.read).length}
+		case MST_RECV:
+			return{...state, chatmsg:[...state.chatmsg,action.payload]}
+		// case MSG_READ:
+		default:
+			return state
+	}
+}
+//action creator 默认要返回一个object或者函数
+function msgList(msgs){
+	return{type:MSG_LIST,payload:msgs}
+}
+function msgRecv(msg){
+	return{type:MST_RECV,payload:msg}
+}
+export function recvMsg(){
+	return dispatch=>{
+		socket.on('recvmsg',function(data){
+			console.log('recvmsg',data)
+			dispatch(msgRecv(data))
+		})
+	}
+}
+export function sendMsg({from, to, msg}){
+	return dispatch=>{
+		//直接把数据发给后端
+		socket.emit('sendmsg',{from, to, msg})
+	}
+}
+export function getMsgList(){
+	return dispatch=>{
+		axios.get('/user/getmsglist')
+			.then(res=>{
+				if(res.state==200 && res.data.code==0){
+					dispatch(msgList(res.data.msgs))
+				}
+			})
+	}
+}
