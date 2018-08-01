@@ -2,3 +2,11 @@
 	color:#f50;
 	padding-left:10px;
 }
+
+#chat-page .chat-me .am-list-extra{
+	flex-basis: auto
+}
+#chat-page .chat-me .am-list-content{
+	padding-right: 15px;
+	text-align: right;
+}
