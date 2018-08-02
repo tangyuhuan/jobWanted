@@ -16,9 +16,13 @@ import reducers from './reducer'
 import './config'
 import './index.css'
 //新建store，以props形式传给App
-const store = createStore(reducers,compose(
+// const store = createStore(reducers,compose(
+// 	applyMiddleware(thunk),
+// 	window.devToolsExtension? window.devToolsExtension():()=>{}
+// ))
+const store = createStore(reducers, compose(
 	applyMiddleware(thunk),
-	window.devToolsExtension? window.devToolsExtension():()=>{}
+	window.devToolsExtension?window.devToolsExtension():f=>f
 ))
 //boss genius me msg四个页面
 ReactDOM.render(

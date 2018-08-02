@@ -6,6 +6,9 @@ const User = model.getModel('user')
 const Chat = model.getModel('chat')
 const utils = require('utility')
 const _filter = {'pwd':0,'__v':0}
+// Chat.remove({},function(err,doc){
+
+// })
 Router.get('/list',function(req,res){
 	//清除一下之前list中的数据
 	//User.remove({},function(err,doc){})
