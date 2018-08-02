@@ -19,11 +19,19 @@ Router.get('/list',function(req,res){
 })
 Router.get('/getmsglist',function(req,res){
 	//从cookie中获取用户所有信息
-	const user = req.cookies.user
-	Chat.find({},function(err,doc){
-		if(!err){
-			return res.json({code:0,msgs:doc})
-		}
+	const user = req.cookies.userid
+	User.find({},function(err,userdoc){
+		let users = {}
+		userdoc.forEach(v=>{
+			users[v._id] = {name:v.user,avatar:v.avatar}
+		})
+		//之前查询聊天信息的时候是查询所有信息，这样你和不同人聊天信息就会混在一起
+		//$or查询多个条件，之后分别用数组放置多个条件
+		Chat.find({'$or':[{from:user},{to:user}]},function(err,doc){
+			if(!err){
+				return res.json({code:0,msgs:doc,users:users})
+			}
+		})
 	})
 })
 Router.post('/update',function(req,res){
