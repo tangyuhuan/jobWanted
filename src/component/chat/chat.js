@@ -16,8 +16,8 @@ class Chat extends Component{
 		}
 	}
 	componentDidMount(){
-		this.props.getMsgList()
-		this.props.recvMsg()
+		// this.props.getMsgList()
+		// this.props.recvMsg()
 		// socket.on('recvmsg',(data)=>{
 		// 	this.setState({
 		// 		msg:[...this.state.msg, data.text]
@@ -39,7 +39,6 @@ class Chat extends Component{
 				<NavBar mode='dark'>
 					{this.props.match.params.user}
 				</NavBar>
-
 				{this.props.chat.chatmsg.map(v=>{
 					return v.from ==user?(
 						<List key={v._id}>
@@ -71,3 +70,4 @@ export default Chat
 
 
 //<h2>chat with user:{this.props.match.params.user}</h2>
+
