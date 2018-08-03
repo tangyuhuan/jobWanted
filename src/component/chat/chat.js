@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {List,InputItem,NavBar,Icon} from 'antd-mobile'
+import {List,InputItem,NavBar,Icon,Grid} from 'antd-mobile'
 import {connect} from 'react-redux'
 import {getMsgList,sendMsg,recvMsg} from '../../redux/chat.redux'
 import {getChatId} from '../../util'
@@ -12,7 +12,7 @@ class Chat extends Component{
 		super(props)
 		this.state={
 			text:'',
-			msg: []
+			showEmoji:false,
 		}
 	}
 	componentDidMount(){
@@ -20,6 +20,11 @@ class Chat extends Component{
 			this.props.getMsgList()
 			this.props.recvMsg()
 		}
+	}
+	fixCarousel(){
+		setTimeout(function(){
+			window.dispatchEvent(new Event('resize'))
+		},0)
 	}
 	handleSubmit(){
 		//socket.emit('sendmsg',{text:this.state.text})
@@ -29,7 +34,17 @@ class Chat extends Component{
 		this.props.sendMsg({from,to,msg})
 		this.setState({text:''})//发送完之后把state清空一下
 	}
+	letEmojiShow=()=>{
+		this.setState({
+			showEmoji:!this.state.showEmoji
+		})
+		this.fixCarousel()
+	}
 	render(){
+		const emoji = '😃 😂 😍 🤣 😘 😉 😊 🤗 🤔 😏 😓 😭 😇 😎 😉 😋 😄 😨 😩 😈 👿 👍 👌 💪'
+						.split(' ')
+						.filter(v=>v) 
+						.map(v=>({text:v})) 
 		const userid = this.props.match.params.user //当前聊天的目标
 		const users = this.props.chat.users
 		const chatid = getChatId(userid, this.props.user._id)
@@ -70,9 +85,28 @@ class Chat extends Component{
 						 onChange={v=>{
 						 	this.setState({text:v})
 						 }}
-						 extra={<span onClick={()=>this.handleSubmit()}> 发送</span>}
+						 extra={
+							<div>
+								<span style={{marginRight:15}}
+								onClick={this.letEmojiShow}
+								>😊</span>
+								<span onClick={()=>this.handleSubmit()}> 发送</span>
+							</div>
+						 }
 						 />
 					</List>
+					{this.state.showEmoji?<Grid 
+					data={emoji}
+					columnNum={6}
+					carouselMaxRow={2}
+					isCarousel
+					onClick={el => {
+						this.setState({
+							text:this.state.text+el.text
+						})
+					}}
+					/>:null}
+					
 				</div>
 			</div>
 		)
