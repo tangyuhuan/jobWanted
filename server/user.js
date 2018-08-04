@@ -34,6 +34,24 @@ Router.get('/getmsglist',function(req,res){
 		})
 	})
 })
+Router.post('/readmsg',function(req,res){
+	const userid = req.cookies.userid
+	const {from} = req.body
+	//修改的结果
+	//mongoose的update默认修改第一个找到的,{'multi':true}使得修改多行
+	Chat.update(
+		{from,to:userid},
+		{'$set':{read:true}},
+		{'multi':true},
+		function(err,doc){
+		console.log(doc) //{ n: 5, nModified: 0, ok: 1 }
+		//n表示from和to的数据条数 nModified到底影响了多少条 ok：1表示修改语句成功
+		if(!err){
+			return res.json({code:0,num:doc.nModified})
+		}
+		return res.json({code:0,msg:'修改失败'})
+	})
+})
 Router.post('/update',function(req,res){
 	//cookie校验
 	const userid = req.cookies.userid

@@ -17,8 +17,12 @@ class Msg extends Component{
             msgGroup[v.chatid] = msgGroup[v.chatid] || []
             msgGroup[v.chatid].push(v)
         })
-        const chatList = Object.values(msgGroup) //把对象所有的value拿出来组成一个数组
-        //根据chatid按照聊天用户分组
+        const chatList = Object.values(msgGroup).sort((a,b)=>{
+            const a_last = this.getLast(a).create_time
+            const b_last = this.getLast(b).create_time
+            return a_last - b_last
+        })//把对象所有的value拿出来组成一个数组
+        console.log(chatList)
         return(
             <div> 
                 {chatList.map(v=>{
@@ -34,7 +38,12 @@ class Msg extends Component{
                         <List key={lastItem._id}>
                         <List.Item 
                         extra={<Badge text={unreadNum}></Badge>}
-                        thumb={require(`../img/${avatar}.jpeg`)}>   
+                        thumb={require(`../img/${avatar}.jpeg`)}
+                        arrow='horizontal'
+                        onClick={()=>{
+                            this.props.history.push(`/chat/${targetId}`)
+                        }}
+                        >   
                             {lastItem.content}
                             <List.Item.Brief>{name}</List.Item.Brief>
                         </List.Item>
@@ -46,3 +55,4 @@ class Msg extends Component{
     }
 }
 export default Msg
+
