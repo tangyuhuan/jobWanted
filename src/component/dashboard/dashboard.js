@@ -4,13 +4,11 @@ import NavLinkBar from '../navlink/navlink'
 // import PropTypes from 'prop-types';
 import {connect} from 'react-redux'
 import { Route, Redirect, Switch } from 'react-router-dom'
-import Boss from '../../component/boss/boss'
-import Genius from '../../component/genius/genius'
-import User from '../../component/user/user'
+import Boss from '../boss/boss'
+import Genius from '../genius/genius'
+import User from '../user/user'
+import Msg from '../msg/msg'
 import {getMsgList,recvMsg} from '../../redux/chat.redux'
-function Msg(){
-	return <h2>消息列表页面</h2>
-}
 @connect(
 	state=>state,
 	{getMsgList,recvMsg}
