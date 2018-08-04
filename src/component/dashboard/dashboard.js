@@ -2,7 +2,7 @@ import React,{Component} from 'react'
 import { NavBar} from 'antd-mobile';
 import NavLinkBar from '../navlink/navlink'
 import {connect} from 'react-redux'
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch, Redirect} from 'react-router-dom'
 import Boss from '../boss/boss'
 import Genius from '../genius/genius'
 import User from '../user/user'
@@ -56,14 +56,15 @@ class Dashboard extends Component{
 				component:User,//所要渲染的组件
 			},
 		]
-		return(
+		const page = navList.find(v=>v.path==pathname)
+		return page?(
 			<div>
 		    	<NavLinkBar data={navList}>
 					{/*header页面*/}
-			    	<NavBar>{navList.find(v=>v.path===pathname).title}</NavBar>
+			    	<NavBar>{page.title}</NavBar>
 			    	<div style={{marginTop:10}}>
 				    	<Switch>
-							<QueueAnim type='scale' delay={100}>
+							<QueueAnim type='scale' delay={200}>
 				    		{navList.map(v=>(
 				    			<Route key={v.path} path={v.path} component={v.component}></Route>
 							))}
@@ -72,7 +73,7 @@ class Dashboard extends Component{
 			    	</div>
 		    	</NavLinkBar>
 		    </div>
-		)
+		):<Redirect to='/msg'></Redirect>
 	}
 }
 export default Dashboard
