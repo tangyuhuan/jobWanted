@@ -6,12 +6,13 @@ const User = model.getModel('user')
 const Chat = model.getModel('chat')
 const utils = require('utility')
 const _filter = {'pwd':0,'__v':0}
+//清除消息列表
 // Chat.remove({},function(err,doc){
 
 // })
 Router.get('/list',function(req,res){
 	//清除一下之前list中的数据
-	//User.remove({},function(err,doc){})
+	// User.remove({},function(err,doc){})
 	const { type } = req.query //通过req.query获取get参数
 	User.find({type},function(err,doc){
 		return res.json({code:0,data:doc})
