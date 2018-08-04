@@ -1,5 +1,5 @@
 import React,{Component} from 'react'
-import { Card, WhiteSpace, WingBlank} from 'antd-mobile';
+import { Card, WingBlank} from 'antd-mobile';
 import PropTypes from 'prop-types';
 import {withRouter} from 'react-router-dom'
 const detailStyle={
@@ -12,9 +12,6 @@ class UserCard extends Component{
 	}
 	handleClick(v){
 		this.props.history.push(`/chat/${v._id}`)
-	}
-	constructor(props){
-		super(props)
 	}
 	render(){
 		return(

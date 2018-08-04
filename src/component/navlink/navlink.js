@@ -8,10 +8,6 @@ import {connect} from 'react-redux'
 	state=>state.chat
 )
 class NavLinkBar extends Component{
-	constructor(props){
-		super(props)
-		
-	}
 	static propTypes={
 		data: PropTypes.array.isRequired
 	}
